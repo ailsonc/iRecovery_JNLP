@@ -1,6 +1,7 @@
 package com.br.irecovery.view;
 
 import com.br.irecovery.models.ComboItem;
+import com.br.irecovery.models.ComboObjectListCellRenderer;
 import com.br.irecovery.models.Device;
 import com.br.irecovery.models.Devices;
 
@@ -29,25 +30,66 @@ public class JFrame extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jComboBox1 = new javax.swing.JComboBox();
+        comboxDevice = new javax.swing.JComboBox<>();
+        jLabel1 = new javax.swing.JLabel();
+        loadDevice = new javax.swing.JButton();
+        start = new javax.swing.JButton();
+        message = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jLabel1.setText("Device");
+
+        loadDevice.setText("Load");
+        loadDevice.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                loadDeviceActionPerformed(evt);
+            }
+        });
+
+        start.setText("Start");
+        start.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                startActionPerformed(evt);
+            }
+        });
+
+        message.setText("Carregando...");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(55, 55, 55)
-                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 238, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(87, Short.MAX_VALUE))
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(comboxDevice, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(loadDevice))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(message, javax.swing.GroupLayout.DEFAULT_SIZE, 158, Short.MAX_VALUE)
+                        .addGap(179, 179, 179)
+                        .addComponent(start))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addGap(175, 175, 175)))
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(76, 76, 76)
-                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(182, Short.MAX_VALUE))
+                .addGap(59, 59, 59)
+                .addComponent(jLabel1)
+                .addGap(3, 3, 3)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(comboxDevice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(loadDevice, javax.swing.GroupLayout.DEFAULT_SIZE, 29, Short.MAX_VALUE))
+                .addGap(148, 148, 148)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(start)
+                    .addComponent(message))
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -69,6 +111,18 @@ public class JFrame extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void loadDeviceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loadDeviceActionPerformed
+	setComboBox();
+    }//GEN-LAST:event_loadDeviceActionPerformed
+
+    private void startActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startActionPerformed
+        Object selectedItem = comboxDevice.getSelectedItem();
+        ComboItem item = (ComboItem)selectedItem;
+        if (item != null) {
+            message.setText(item.getValue());
+        }
+    }//GEN-LAST:event_startActionPerformed
 
     /**
      * @param args the command line arguments
@@ -108,26 +162,40 @@ public class JFrame extends javax.swing.JFrame {
 
     public void loadDevice(){
         System.out.println("loadDevice...");
-
-        devices = new Devices();
-        devices.setDevices();
-        		             
 	setComboBox();
     }
     
     public void setComboBox(){	
         System.out.println("setComboBox...");
-        jComboBox1.removeAllItems();
-     	
-        for (Device device : devices.getDevices()) {
-            jComboBox1.addItem(new ComboItem(device.getDeviceID()+" "+device.getCaption(), device.getDeviceID()));
-	}
+        boolean empty = true;
+        comboxDevice.removeAllItems();
+     	devices = new Devices();
+        devices.setDevices();
+        start.setEnabled(true);
+        comboxDevice.setEnabled(true);
         
-        //comboBoxDrive.getSelectionModel().selectFirst();
+        for (Device device : devices.getDevices()) {
+            comboxDevice.addItem(new ComboItem(device.getDeviceID()+" "+device.getCaption(), device.getDeviceID()));
+	    empty = false;
+        }
+        
+        comboxDevice.setRenderer(new ComboObjectListCellRenderer());
+        
+        if (empty) {
+            start.setEnabled(false);
+            comboxDevice.setEnabled(false);
+            message.setText("Não tem dispositivo");
+        } else {
+            message.setText("Aguardando...");
+        }
     }
-
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox jComboBox1;
+    private javax.swing.JComboBox<ComboItem> comboxDevice;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JButton loadDevice;
+    private javax.swing.JLabel message;
+    private javax.swing.JButton start;
     // End of variables declaration//GEN-END:variables
 }

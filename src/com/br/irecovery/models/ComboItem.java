@@ -5,18 +5,18 @@ package com.br.irecovery.models;
  * @author ailson
  */
 public class ComboItem {
-    private String key;
+    private String label;
     private String value;
 
-    public ComboItem(String key, String value)
+    public ComboItem(String label, String value)
     {
-        this.key = key;
+        this.label = label;
         this.value = value;
     }
 
-    public String getKey()
+    public String getLabel()
     {
-        return key;
+        return label;
     }
 
     public String getValue()
@@ -26,7 +26,7 @@ public class ComboItem {
 
     @Override
     public String toString() {
-        return "ComboItem{" + "key=" + key + ", value=" + value + '}';
+        return "ComboItem{" + "label=" + label + ", value=" + value + '}';
     }
     
 }
