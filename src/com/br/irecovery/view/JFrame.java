@@ -1,9 +1,11 @@
 package com.br.irecovery.view;
 
-import com.br.irecovery.models.ComboItem;
+import com.br.irecovery.controller.StartController;
 import com.br.irecovery.models.ComboObjectListCellRenderer;
 import com.br.irecovery.models.Device;
 import com.br.irecovery.models.Devices;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -37,6 +39,12 @@ public class JFrame extends javax.swing.JFrame {
         message = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        comboxDevice.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                comboxDeviceActionPerformed(evt);
+            }
+        });
 
         jLabel1.setText("Device");
 
@@ -117,12 +125,21 @@ public class JFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_loadDeviceActionPerformed
 
     private void startActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startActionPerformed
-        Object selectedItem = comboxDevice.getSelectedItem();
-        ComboItem item = (ComboItem)selectedItem;
-        if (item != null) {
-            message.setText(item.getValue());
-        }
+        try {
+            Object selectedItem = comboxDevice.getSelectedItem();
+            Device device = (Device)selectedItem;
+            if (device != null) {
+                message.setText(device.getDeviceID());
+                StartController.runRecovery(device);
+            }
+        } catch (Exception ex) {
+                Logger.getLogger(JFrame.class.getName()).log(Level.SEVERE, null, ex);
+            }
     }//GEN-LAST:event_startActionPerformed
+
+    private void comboxDeviceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboxDeviceActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_comboxDeviceActionPerformed
 
     /**
      * @param args the command line arguments
@@ -175,7 +192,7 @@ public class JFrame extends javax.swing.JFrame {
         comboxDevice.setEnabled(true);
         
         for (Device device : devices.getDevices()) {
-            comboxDevice.addItem(new ComboItem(device.getDeviceID()+" "+device.getCaption(), device.getDeviceID()));
+            comboxDevice.addItem(device);
 	    empty = false;
         }
         
@@ -191,7 +208,7 @@ public class JFrame extends javax.swing.JFrame {
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox<ComboItem> comboxDevice;
+    private javax.swing.JComboBox<Device> comboxDevice;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JButton loadDevice;

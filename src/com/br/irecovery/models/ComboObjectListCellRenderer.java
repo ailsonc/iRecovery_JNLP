@@ -15,8 +15,8 @@ public class ComboObjectListCellRenderer extends DefaultListCellRenderer {
                                    int index,
                                    boolean isSelected,
                                    boolean cellHasFocus) {
-        if (label instanceof ComboItem) {
-            label = ((ComboItem)label).getLabel();
+        if (label instanceof Device) {
+            label = ((Device)label).getDeviceID() + ((Device)label).getCaption();
         }
         super.getListCellRendererComponent(list, label, index, isSelected, cellHasFocus);
         return this;
