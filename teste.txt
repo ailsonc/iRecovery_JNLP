@@ -1,4 +1,0 @@
-Microsoft Windows [versÆo 10.0.17763.737]
-(c) 2018 Microsoft Corporation. Todos os direitos reservados.
-
-C:\desenv\java\iRecovery>

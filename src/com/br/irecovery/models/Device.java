@@ -8,6 +8,7 @@ public class Device {
     private String deviceID;
     private String caption;
     private String size;
+    private String index;
 
     public String getDeviceID() {
 	return deviceID;
@@ -33,9 +34,17 @@ public class Device {
         this.size = size;
     }
 
+    public String getIndex() {
+        return index;
+    }
+
+    public void setIndex(String index) {
+        this.index = index;
+    }
+
     @Override
     public String toString() {
-        return "Device{" + "deviceID=" + deviceID + ", caption=" + caption + ", size=" + size + '}';
+        return "Device{" + "deviceID=" + deviceID + ", caption=" + caption + ", size=" + size + ", index=" + index + '}';
     }
     
 }

@@ -1,0 +1,7 @@
+select disk 2
+clean
+create partition primary
+active
+format quick fs=ntfs label="iRecovery"
+assign letter="T"
+exit
