@@ -1,9 +1,12 @@
 package com.br.irecovery.view;
 
 import com.br.irecovery.controller.StartController;
-import com.br.irecovery.models.ComboObjectListCellRenderer;
+import com.br.irecovery.models.ComboDeviceRenderer;
+import com.br.irecovery.models.ComboImageRenderer;
 import com.br.irecovery.models.Device;
 import com.br.irecovery.models.Devices;
+import com.br.irecovery.models.Image;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -13,13 +16,15 @@ import java.util.logging.Logger;
  */
 public class JFrame extends javax.swing.JFrame {
     Devices devices;
+    private ArrayList<Image> images = new ArrayList();
 
     /**
      * Creates new form JFrame
      */
     public JFrame() {
         initComponents();
-        loadDevice();
+        loadDevices();
+        loadImages();
     }
 
     /**
@@ -32,21 +37,17 @@ public class JFrame extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        comboxDevice = new javax.swing.JComboBox<>();
+        comboxDevices = new javax.swing.JComboBox<>();
         jLabel1 = new javax.swing.JLabel();
         loadDevice = new javax.swing.JButton();
         start = new javax.swing.JButton();
         message = new javax.swing.JLabel();
+        comboxImages = new javax.swing.JComboBox<>();
+        jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        comboxDevice.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                comboxDeviceActionPerformed(evt);
-            }
-        });
-
-        jLabel1.setText("Device");
+        jLabel1.setText("Dispositivo");
 
         loadDevice.setText("Load");
         loadDevice.addActionListener(new java.awt.event.ActionListener() {
@@ -64,6 +65,8 @@ public class JFrame extends javax.swing.JFrame {
 
         message.setText("Carregando...");
 
+        jLabel2.setText("Imagem");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -72,17 +75,23 @@ public class JFrame extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(comboxDevice, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(loadDevice))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(message, javax.swing.GroupLayout.DEFAULT_SIZE, 158, Short.MAX_VALUE)
-                        .addGap(179, 179, 179)
-                        .addComponent(start))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel1)
-                        .addGap(175, 175, 175)))
-                .addContainerGap())
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(comboxImages, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(message, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGap(179, 179, 179)
+                                .addComponent(start))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addComponent(comboxDevices, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(loadDevice)))
+                        .addContainerGap())))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -91,9 +100,13 @@ public class JFrame extends javax.swing.JFrame {
                 .addComponent(jLabel1)
                 .addGap(3, 3, 3)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(comboxDevice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(comboxDevices, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(loadDevice, javax.swing.GroupLayout.DEFAULT_SIZE, 29, Short.MAX_VALUE))
-                .addGap(148, 148, 148)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(comboxImages, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(97, 97, 97)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(start)
                     .addComponent(message))
@@ -121,25 +134,25 @@ public class JFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void loadDeviceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loadDeviceActionPerformed
-	setComboBox();
+	loadDevices();
     }//GEN-LAST:event_loadDeviceActionPerformed
 
     private void startActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startActionPerformed
         try {
-            Object selectedItem = comboxDevice.getSelectedItem();
-            Device device = (Device)selectedItem;
-            if (device != null) {
-                message.setText(device.getDeviceID());
-                StartController.runRecovery(device);
+            Object selectedDevice = comboxDevices.getSelectedItem();
+            Object selectedImage = comboxImages.getSelectedItem();
+            
+            Device device = (Device)selectedDevice;
+            Image image = (Image)selectedImage;
+            
+            if (device != null && image != null) {
+                message.setText("Imagem:"+image.getName()+" Para o dispositivo:"+device.getDeviceID());
+                StartController.runRecovery(device, image);
             }
         } catch (Exception ex) {
                 Logger.getLogger(JFrame.class.getName()).log(Level.SEVERE, null, ex);
             }
     }//GEN-LAST:event_startActionPerformed
-
-    private void comboxDeviceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboxDeviceActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_comboxDeviceActionPerformed
 
     /**
      * @param args the command line arguments
@@ -177,30 +190,41 @@ public class JFrame extends javax.swing.JFrame {
         
     }
 
-    public void loadDevice(){
-        System.out.println("loadDevice...");
-	setComboBox();
-    }
-    
-    public void setComboBox(){	
-        System.out.println("setComboBox...");
+    public void loadImages(){
+        System.out.println("loadImages...");
         boolean empty = true;
-        comboxDevice.removeAllItems();
-     	devices = new Devices();
-        devices.setDevices();
-        start.setEnabled(true);
-        comboxDevice.setEnabled(true);
+        comboxImages.removeAllItems();
+        images.add(new Image("Noteook X","d:\\Windows.iso","123","Windows 10 Build 10/10/2019","Windows 10"));
+        images.add(new Image("Noteook Y","d:\\Windows.iso","123","Windows 10 Build 10/10/2019","Windows 10"));
+        System.out.println(images.toString());
         
-        for (Device device : devices.getDevices()) {
-            comboxDevice.addItem(device);
+        for (Image image : images) {
+            comboxImages.addItem(image);
 	    empty = false;
         }
         
-        comboxDevice.setRenderer(new ComboObjectListCellRenderer());
+        comboxImages.setRenderer(new ComboImageRenderer());
+    }
+    
+    public void loadDevices(){	
+        System.out.println("loadDevices...");
+        boolean empty = true;
+        comboxDevices.removeAllItems();
+     	devices = new Devices();
+        devices.setDevices();
+        start.setEnabled(true);
+        comboxDevices.setEnabled(true);
+        
+        for (Device device : devices.getDevices()) {
+            comboxDevices.addItem(device);
+	    empty = false;
+        }
+        
+        comboxDevices.setRenderer(new ComboDeviceRenderer());
         
         if (empty) {
             start.setEnabled(false);
-            comboxDevice.setEnabled(false);
+            comboxDevices.setEnabled(false);
             message.setText("Não tem dispositivo");
         } else {
             message.setText("Aguardando...");
@@ -208,8 +232,10 @@ public class JFrame extends javax.swing.JFrame {
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox<Device> comboxDevice;
+    private javax.swing.JComboBox<Device> comboxDevices;
+    private javax.swing.JComboBox<Image> comboxImages;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JButton loadDevice;
     private javax.swing.JLabel message;

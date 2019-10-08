@@ -8,7 +8,7 @@ import javax.swing.JList;
  *
  * @author ailson
  */
-public class ComboObjectListCellRenderer extends DefaultListCellRenderer {
+public class ComboDeviceRenderer extends DefaultListCellRenderer {
     public Component getListCellRendererComponent(
                                    JList list,
                                    Object label,

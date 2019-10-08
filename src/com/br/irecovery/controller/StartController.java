@@ -1,6 +1,7 @@
 package com.br.irecovery.controller;
 
 import com.br.irecovery.models.Device;
+import com.br.irecovery.models.Image;
 import com.br.irecovery.util.Cmd;
 import java.io.FileWriter;
 import java.io.PrintWriter;
@@ -17,7 +18,7 @@ public class StartController {
         
     }
        
-    public static void runRecovery(Device device) throws Exception{
+    public static void runRecovery(Device device, Image image) throws Exception{
         ArrayList<String> cmdsBegin = new ArrayList<String>();  
         validate();
         
