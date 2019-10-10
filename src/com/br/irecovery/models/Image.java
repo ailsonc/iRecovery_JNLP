@@ -6,19 +6,17 @@ package com.br.irecovery.models;
  */
 public class Image {
     private String name;
-    private String profile;
-    private String md5;
-    private String description;
-    private String system;
+    private String fileName;
+    private String fileDir;
+    private String fileHash;
 
-    public Image(String name, String profile, String md5, String description, String system) {
+    public Image(String name, String fileName, String fileDir, String fileHash) {
         this.name = name;
-        this.profile = profile;
-        this.md5 = md5;
-        this.description = description;
-        this.system = system;
+        this.fileName = fileName;
+        this.fileDir = fileDir;
+        this.fileHash = fileHash;
     }
-    
+
     public String getName() {
         return name;
     }
@@ -27,41 +25,33 @@ public class Image {
         this.name = name;
     }
 
-    public String getProfile() {
-        return profile;
+    public String getFileName() {
+        return fileName;
     }
 
-    public void setProfile(String profile) {
-        this.profile = profile;
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
     }
 
-    public String getMd5() {
-        return md5;
+    public String getFileDir() {
+        return fileDir;
     }
 
-    public void setMd5(String md5) {
-        this.md5 = md5;
-    }
-    
-    public String getDescription() {
-        return description;
+    public void setFileDir(String fileDir) {
+        this.fileDir = fileDir;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public String getFileHash() {
+        return fileHash;
     }
 
-    public String getSystem() {
-        return system;
-    }
-
-    public void setSystem(String system) {
-        this.system = system;
+    public void setFileHash(String fileHash) {
+        this.fileHash = fileHash;
     }
 
     @Override
     public String toString() {
-        return "Image{" + "name=" + name + ", profile=" + profile + ", description=" + description + ", system=" + system + '}';
+        return "Image{" + "name=" + name + ", fileName=" + fileName + ", fileDir=" + fileDir + ", fileHash=" + fileHash + '}';
     }
-    
+     
 }
