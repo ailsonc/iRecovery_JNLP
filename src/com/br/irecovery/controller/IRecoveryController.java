@@ -3,6 +3,7 @@ package com.br.irecovery.controller;
 import com.br.irecovery.models.Device;
 import com.br.irecovery.models.Image;
 import com.br.irecovery.util.Cmd;
+import com.br.irecovery.util.Log;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -12,6 +13,7 @@ import java.nio.channels.FileChannel;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.zip.CRC32;
 import javax.swing.JLabel;
 import javax.swing.JProgressBar;
 
@@ -21,7 +23,8 @@ import javax.swing.JProgressBar;
  */
 public class IRecoveryController {
     private static String tmpdir = System.getProperty("java.io.tmpdir");
-  
+    private static String hash;
+    
     private static void validate() throws Exception{
         
     }   
@@ -34,12 +37,10 @@ public class IRecoveryController {
                 try {
                     message.setText("Formatando o dispositivo"); 
                     diskpart(device);
-                    cmdsBegin.add("cmd /c diskpart.exe /s "+tmpdir+"\\diskpart.txt");
+                    //cmdsBegin.add("cmd /c diskpart.exe /s "+tmpdir+"\\diskpart.txt");
                     Cmd.commands(cmdsBegin);
 
-                    message.setText("Copiando a imagem"); 
-                    copyFile(new File(image.getFileDir()), new File(tmpdir+"\\"+image.getFileName()), jProgressBar1);
-                    message.setText("Copiado"); 
+                    copyFile(image, message, jProgressBar1);                  
                     
                 } catch (Exception ex) {
                     Logger.getLogger(IRecoveryController.class.getName()).log(Level.SEVERE, null, ex);
@@ -61,12 +62,23 @@ public class IRecoveryController {
         diskpart.close();
     }
         
-    private static void copyFile(File source, File destination, JProgressBar jProgressBar1) throws Exception{
+    private static Boolean copyFile(Image image, JLabel message, JProgressBar jProgressBar1) throws Exception{
+        
+        File source = new File(image.getFileDir());
+        File destination =  new File(tmpdir+"\\"+image.getFileName());
+        
         if(destination.exists()){
-            //todo hash
-            destination.delete();
+            message.setText("Validando a imagem");
+            hash = getHash(image);
+            if(image.getFileHash().equals(hash)){
+                Log.setLog(Level.INFO, "Image na maquina");
+                return false;
+            } else {
+                destination.delete();  
+            }
         }
         
+        message.setText("Copiando a imagem"); 
         FileChannel sourceChannel = null;
         FileChannel destinationChannel = null;
         
@@ -84,7 +96,6 @@ public class IRecoveryController {
             destinationChannel = new FileOutputStream(destination).getChannel();
             for (int pos = 0; pos < 100; pos ++) {
                 destinationChannel.transferFrom(sourceChannel, pos * readSeg, readSeg);
-                System.out.println(pos);
                 jProgressBar1.setValue(pos);  
             }
             if (readRemain > 0) {
@@ -99,6 +110,29 @@ public class IRecoveryController {
                 destinationChannel.close();
             }
         }
+        
+        message.setText("Validando a imagem");           
+        hash = getHash(image);
+        if(image.getFileHash().equals(hash)){
+            return true; 
+        } else {
+            message.setText("Erro: CRC do arquivo " + hash + ", Correto " + image.getFileHash()); 
+            Log.setLog(Level.WARNING, "Erro: CRC do arquivo");
+            throw new Exception("Erro: CRC do arquivo");
+        }
     }
+
+    private static String getHash(Image image) throws Exception{
+        FileInputStream fis = new FileInputStream(new File(tmpdir+"\\"+image.getFileName()));
+        CRC32 crcMaker = new CRC32();
+        byte[] buffer = new byte[65536];
+        int bytesRead;
+        while((bytesRead = fis.read(buffer)) != -1) {
+            crcMaker.update(buffer, 0, bytesRead);
+        }
+        long crc = crcMaker.getValue(); // This is your error checking code    
+        Log.setLog(Level.INFO, "CRC code is " + crc);
+        return String.valueOf(crc);        
+    } 
 
 }

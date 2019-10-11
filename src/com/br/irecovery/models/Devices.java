@@ -1,8 +1,10 @@
 package com.br.irecovery.models;
 
 import com.br.irecovery.util.JWMICustom;
+import com.br.irecovery.util.Log;
 import java.util.ArrayList;
 import java.util.StringTokenizer;
+import java.util.logging.Level;
 /**
  *
  * @author ailson
@@ -17,7 +19,7 @@ public class Devices {
         device.setSize(custom.getNaWMI("Win32_LogicalDisk WHERE Description = 'Removable Disk' OR Description = 'Disco Removível' ", "Size"));
         device.setCaption(custom.getNaWMI("Win32_DiskDrive WHERE MediaType = 'Removable Media'", "Caption"));
         device.setIndex(custom.getNaWMI("Win32_DiskDrive WHERE MediaType = 'Removable Media'", "Index"));
-        System.out.println(device.toString());			
+        Log.setLog(Level.INFO, device.toString());		
     }
         
     public ArrayList<Device> getDevices() {
@@ -27,12 +29,12 @@ public class Devices {
         StringTokenizer index = new StringTokenizer(this.device.getIndex(), "\n");
         
         while (deviceID.hasMoreTokens() && caption.hasMoreTokens() && size.hasMoreTokens() && index.hasMoreTokens()) {
-	    Device device = new Device();
-	    device.setDeviceID(deviceID.nextToken().trim());
-	    device.setCaption(caption.nextToken().trim());
-            device.setSize(size.nextToken().trim());
-            device.setIndex(index.nextToken().trim());
-	    devices.add(device);
+	    Device devicePlace = new Device();
+	    devicePlace.setDeviceID(deviceID.nextToken().trim());
+	    devicePlace.setCaption(caption.nextToken().trim());
+            devicePlace.setSize(size.nextToken().trim());
+            devicePlace.setIndex(index.nextToken().trim());
+	    devices.add(devicePlace);
 	}
 	return devices;
     }

@@ -6,6 +6,8 @@ import com.br.irecovery.models.ComboImageRenderer;
 import com.br.irecovery.models.Device;
 import com.br.irecovery.models.Devices;
 import com.br.irecovery.models.Image;
+import com.br.irecovery.util.Log;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -26,9 +28,9 @@ public class JFrame extends javax.swing.JFrame {
      */
     public JFrame() {
         initComponents();
+        loadLog();
         loadDevices();
         loadImages();
-        
     }
 
     /**
@@ -41,12 +43,12 @@ public class JFrame extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        comboxDevices = new javax.swing.JComboBox<>();
+        comboxDevices = new javax.swing.JComboBox<Device>();
         jLabel1 = new javax.swing.JLabel();
         loadDevice = new javax.swing.JButton();
         start = new javax.swing.JButton();
         message = new javax.swing.JLabel();
-        comboxImages = new javax.swing.JComboBox<>();
+        comboxImages = new javax.swing.JComboBox<Image>();
         jLabel2 = new javax.swing.JLabel();
         jProgressBar1 = new javax.swing.JProgressBar();
 
@@ -89,13 +91,13 @@ public class JFrame extends javax.swing.JFrame {
                             .addComponent(jProgressBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(comboxImages, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(message, javax.swing.GroupLayout.DEFAULT_SIZE, 229, Short.MAX_VALUE)
-                                .addGap(179, 179, 179)
+                                .addGap(0, 0, Short.MAX_VALUE)
                                 .addComponent(start))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                                 .addComponent(comboxDevices, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(loadDevice)))
+                                .addComponent(loadDevice))
+                            .addComponent(message, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addContainerGap())))
         );
         jPanel1Layout.setVerticalGroup(
@@ -113,10 +115,10 @@ public class JFrame extends javax.swing.JFrame {
                 .addComponent(comboxImages, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
                 .addComponent(jProgressBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(27, 27, 27)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(start)
-                    .addComponent(message))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(message)
+                .addGap(7, 7, 7)
+                .addComponent(start)
                 .addContainerGap())
         );
 
@@ -196,13 +198,20 @@ public class JFrame extends javax.swing.JFrame {
         });
         
     }
-
+ 
+    public void loadLog(){
+        try {
+            Log.setup();
+	} catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    
     public void loadImages(){
-        System.out.println("loadImages...");
         boolean empty = true;
         comboxImages.removeAllItems();
-        images.add(new Image("Noteook X","Windows.iso","d:\\Windows.iso","123"));
-        System.out.println(images.toString());
+        images.add(new Image("Noteook X","Windows.iso","d:\\Windows.iso","2649169258"));
+        Log.setLog(Level.INFO, "Imagem: " + images.toString());
         
         for (Image image : images) {
             comboxImages.addItem(image);
@@ -213,7 +222,6 @@ public class JFrame extends javax.swing.JFrame {
     }
     
     public void loadDevices(){	
-        System.out.println("loadDevices...");
         boolean empty = true;
         comboxDevices.removeAllItems();
      	devices = new Devices();

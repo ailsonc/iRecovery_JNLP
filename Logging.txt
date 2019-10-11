@@ -1,0 +1,8 @@
+out 11, 2019 11:30:55 AM com.br.irecovery.util.Log setLog
+INFORMA합ES: Device{deviceID=E:, caption=Kingston DataTraveler 3.0 USB Device, size=31042039808, index=2}
+out 11, 2019 11:30:55 AM com.br.irecovery.util.Log setLog
+INFORMA합ES: Imagem: [Image{name=Noteook X, fileName=Windows.iso, fileDir=d:\Windows.iso, fileHash=2649169258}]
+out 11, 2019 11:31:19 AM com.br.irecovery.util.Log setLog
+INFORMA합ES: CRC code is 2649169258
+out 11, 2019 11:31:19 AM com.br.irecovery.util.Log setLog
+INFORMA합ES: Image na maquina
