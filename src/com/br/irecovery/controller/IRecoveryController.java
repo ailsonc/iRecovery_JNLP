@@ -37,7 +37,7 @@ public class IRecoveryController {
                 try {
                     message.setText("Formatando o dispositivo"); 
                     diskpart(device);
-                    //cmdsBegin.add("cmd /c diskpart.exe /s "+tmpdir+"\\diskpart.txt");
+                    cmdsBegin.add("cmd /c diskpart.exe /s "+tmpdir+"\\diskpart.txt");
                     Cmd.commands(cmdsBegin);
 
                     copyFile(image, message, jProgressBar1);                  
@@ -55,6 +55,7 @@ public class IRecoveryController {
         gravarArq.println("select disk "+device.getIndex());
         gravarArq.println("clean");
         gravarArq.println("create partition primary");
+        gravarArq.println("select partition 1");
         gravarArq.println("active");
         gravarArq.println("format quick fs=ntfs label=\"iRecovery\"");
         gravarArq.println("assign letter=\""+device.getDeviceID().substring(0, 1)+"\"");
@@ -71,6 +72,7 @@ public class IRecoveryController {
             message.setText("Validando a imagem");
             hash = getHash(image);
             if(image.getFileHash().equals(hash)){
+                message.setText("Imagem Ok");
                 Log.setLog(Level.INFO, "Image na maquina");
                 return false;
             } else {
