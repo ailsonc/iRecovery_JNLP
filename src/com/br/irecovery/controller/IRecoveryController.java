@@ -24,11 +24,7 @@ import javax.swing.JProgressBar;
  */
 public class IRecoveryController {
     private static String tmpdir = System.getProperty("java.io.tmpdir");
-    private static String hash;
-    
-    private static void validate() throws Exception{
-        
-    }   
+    private static String hash; 
     
     public static void run(Device device, Image image, JButton start, JLabel message, JProgressBar jProgressBar1) throws Exception{      
         ArrayList<String> cmdsBegin = new ArrayList<String>();  
@@ -71,7 +67,7 @@ public class IRecoveryController {
         
     private static Boolean copyFile(Image image, JLabel message, JProgressBar jProgressBar1) throws Exception{
         
-        File source = new File(image.getFileDir());
+        File source = new File(image.getFilePath());
         File destination =  new File(tmpdir+"\\"+image.getFileName()+".zip");
         
         if(destination.exists()){

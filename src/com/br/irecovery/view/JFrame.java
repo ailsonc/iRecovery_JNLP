@@ -1,7 +1,7 @@
 package com.br.irecovery.view;
 
 import com.br.irecovery.controller.IRecoveryController;
-import com.br.irecovery.controller.ImageController;
+import com.br.irecovery.rest.ImageRest;
 import com.br.irecovery.models.ComboDeviceRenderer;
 import com.br.irecovery.models.ComboImageRenderer;
 import com.br.irecovery.models.Device;
@@ -214,13 +214,13 @@ public class JFrame extends javax.swing.JFrame {
         comboxImages.removeAllItems();
         
         try {
-            ImageController.getImage();
+            images = ImageRest.getImages();
         } catch (Exception ex) {
             Logger.getLogger(JFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
-        images.add(new Image("Noteook X","Windows","d:\\Windows.zip","274890806"));
+
         Log.setLog(Level.INFO, "Imagem: " + images.toString());
-        
+       
         for (Image image : images) {
             comboxImages.addItem(image);
 	    empty = false;

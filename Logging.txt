@@ -1,6 +1,4 @@
-out 14, 2019 11:23:11 PM com.br.irecovery.util.Log setLog
+out 15, 2019 11:19:11 AM com.br.irecovery.util.Log setLog
 INFORMA합ES: Device{deviceID=E:, caption=Kingston DataTraveler 3.0 USB Device, size=, index=2}
-out 14, 2019 11:23:13 PM com.br.irecovery.util.Log setLog
-INFORMA합ES: {"images":[{"id":1,"name":"Notebook","description":"Notebook X","filename":"1","filepath":"1","filehash":"1"},{"id":2,"name":"Notebook 1","description":"Notebook X","filename":"1","filepath":"12","filehash":"1"},{"id":4,"name":"Notebook 13","description":"Notebook X","filename":"1","filepath":"12","filehash":"1"},{"id":6,"name":"Notebook 14","description":"Notebook X","filename":"1","filepath":"12","filehash":"1"},{"id":7,"name":"Notebook 15","description":"Notebook X","filename":"1","filepath":"12","filehash":"1"},{"id":9,"name":"Notebook 16","description":"Notebook X","filename":"1","filepath":"12","filehash":"1"}]}
-out 14, 2019 11:23:13 PM com.br.irecovery.util.Log setLog
-INFORMA합ES: Imagem: [Image{name=Noteook X, fileName=Windows, fileDir=d:\Windows.zip, fileHash=274890806}]
+out 15, 2019 11:19:13 AM com.br.irecovery.util.Log setLog
+INFORMA합ES: Imagem: [Image{id=1, name=Notebook, description=Notebook X, fileName=1, filePath=1, fileHash=1}, Image{id=2, name=Notebook 1, description=Notebook X, fileName=1, filePath=12, fileHash=1}, Image{id=4, name=Notebook 13, description=Notebook X, fileName=1, filePath=12, fileHash=1}, Image{id=6, name=Notebook 14, description=Notebook X, fileName=1, filePath=12, fileHash=1}, Image{id=7, name=Notebook 15, description=Notebook X, fileName=1, filePath=12, fileHash=1}, Image{id=9, name=Notebook 16, description=Notebook X, fileName=1, filePath=12, fileHash=1}]

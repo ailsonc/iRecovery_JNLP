@@ -5,16 +5,19 @@ package com.br.irecovery.models;
  * @author ailson
  */
 public class Image {
+    private int id;
     private String name;
+    private String description;
     private String fileName;
-    private String fileDir;
+    private String filePath;
     private String fileHash;
 
-    public Image(String name, String fileName, String fileDir, String fileHash) {
-        this.name = name;
-        this.fileName = fileName;
-        this.fileDir = fileDir;
-        this.fileHash = fileHash;
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -25,6 +28,14 @@ public class Image {
         this.name = name;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     public String getFileName() {
         return fileName;
     }
@@ -33,12 +44,12 @@ public class Image {
         this.fileName = fileName;
     }
 
-    public String getFileDir() {
-        return fileDir;
+    public String getFilePath() {
+        return filePath;
     }
 
-    public void setFileDir(String fileDir) {
-        this.fileDir = fileDir;
+    public void setFilePath(String filePath) {
+        this.filePath = filePath;
     }
 
     public String getFileHash() {
@@ -51,7 +62,7 @@ public class Image {
 
     @Override
     public String toString() {
-        return "Image{" + "name=" + name + ", fileName=" + fileName + ", fileDir=" + fileDir + ", fileHash=" + fileHash + '}';
+        return "Image{" + "id=" + id + ", name=" + name + ", description=" + description + ", fileName=" + fileName + ", filePath=" + filePath + ", fileHash=" + fileHash + '}';
     }
      
 }
