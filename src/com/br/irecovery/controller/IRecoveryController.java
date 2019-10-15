@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.zip.CRC32;
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JProgressBar;
 
@@ -29,20 +30,25 @@ public class IRecoveryController {
         
     }   
     
-    public static void run(Device device, Image image, JLabel message, JProgressBar jProgressBar1) throws Exception{      
+    public static void run(Device device, Image image, JButton start, JLabel message, JProgressBar jProgressBar1) throws Exception{      
         ArrayList<String> cmdsBegin = new ArrayList<String>();  
         
         new Thread( new Runnable() {
             public void run() {
                 try {
+                    start.setEnabled(false);
                     message.setText("Formatando o dispositivo"); 
                     diskpart(device);
                     cmdsBegin.add("cmd /c diskpart.exe /s "+tmpdir+"\\diskpart.txt");
                     Cmd.commands(cmdsBegin);
-
-                    copyFile(image, message, jProgressBar1);                  
+                    
+                    System.out.println("copyFile");
+                    copyFile(image, message, jProgressBar1); 
+                    
+                    start.setEnabled(true);
                     
                 } catch (Exception ex) {
+                    start.setEnabled(true);
                     Logger.getLogger(IRecoveryController.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
@@ -66,7 +72,7 @@ public class IRecoveryController {
     private static Boolean copyFile(Image image, JLabel message, JProgressBar jProgressBar1) throws Exception{
         
         File source = new File(image.getFileDir());
-        File destination =  new File(tmpdir+"\\"+image.getFileName());
+        File destination =  new File(tmpdir+"\\"+image.getFileName()+".zip");
         
         if(destination.exists()){
             message.setText("Validando a imagem");
@@ -122,10 +128,10 @@ public class IRecoveryController {
             Log.setLog(Level.WARNING, "Erro: CRC do arquivo");
             throw new Exception("Erro: CRC do arquivo");
         }
-    }
-
+    }    
+    
     private static String getHash(Image image) throws Exception{
-        FileInputStream fis = new FileInputStream(new File(tmpdir+"\\"+image.getFileName()));
+        FileInputStream fis = new FileInputStream(new File(tmpdir+"\\"+image.getFileName()+".zip"));
         CRC32 crcMaker = new CRC32();
         byte[] buffer = new byte[65536];
         int bytesRead;

@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Ant-Version: Apache Ant 1.9.4
 Created-By: 1.8.0_221-b11 (Oracle Corporation)
 X-COMMENT: Main-Class will be added automatically by build
-Codebase: http://ailsonlcosta.onlinewebshop.net/
+Codebase: http://192.168.0.2:5000/
 Permissions: all-permissions
 Application-Name: iRecovery
 

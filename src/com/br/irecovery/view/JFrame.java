@@ -1,6 +1,7 @@
 package com.br.irecovery.view;
 
 import com.br.irecovery.controller.IRecoveryController;
+import com.br.irecovery.controller.ImageController;
 import com.br.irecovery.models.ComboDeviceRenderer;
 import com.br.irecovery.models.ComboImageRenderer;
 import com.br.irecovery.models.Device;
@@ -155,11 +156,12 @@ public class JFrame extends javax.swing.JFrame {
             Image image = (Image)selectedImage;
             
             if (device != null && image != null) {
-                IRecoveryController.run(device, image, message, jProgressBar1);
+                IRecoveryController.run(device, image, start, message, jProgressBar1);
             }
         } catch (Exception ex) {
+                start.setEnabled(true);
                 Logger.getLogger(JFrame.class.getName()).log(Level.SEVERE, null, ex);
-            }
+        }
        
     }//GEN-LAST:event_startActionPerformed
 
@@ -210,7 +212,13 @@ public class JFrame extends javax.swing.JFrame {
     public void loadImages(){
         boolean empty = true;
         comboxImages.removeAllItems();
-        images.add(new Image("Noteook X","Windows.iso","d:\\Windows.iso","2649169258"));
+        
+        try {
+            ImageController.getImage();
+        } catch (Exception ex) {
+            Logger.getLogger(JFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        images.add(new Image("Noteook X","Windows","d:\\Windows.zip","274890806"));
         Log.setLog(Level.INFO, "Imagem: " + images.toString());
         
         for (Image image : images) {
