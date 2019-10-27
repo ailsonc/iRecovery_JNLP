@@ -20,20 +20,18 @@ import org.json.JSONObject;
  * @author ailson
  */
 public class ImageRest {
-    private static String uri = "http://localhost:5000/api/v1/";
+    private static String uri = "http://localhost:5000/api/image";
     private static ArrayList<Image> images = new ArrayList();
             
     public static ArrayList<Image> getImages() throws Exception{
         HttpClient client = new DefaultHttpClient();
-        HttpGet request = new HttpGet(uri + "image");  
+        HttpGet request = new HttpGet(uri);  
         HttpResponse response = client.execute(request);       
-        
+         
         if (response.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
             JSONObject jsonObject = null;
             String responseJSON = EntityUtils.toString(response.getEntity(), UTF8_CHARSET);
-            jsonObject = new JSONObject(responseJSON);
-            
-            JSONArray jsonArray = jsonObject.getJSONArray("images");
+            JSONArray jsonArray = new JSONArray(responseJSON);
             
             for (Object object : jsonArray) {
                 JSONObject rec = (JSONObject)object;
