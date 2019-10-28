@@ -8,9 +8,9 @@ public class Image {
     private int id;
     private String name;
     private String description;
+    private String originalName;
     private String fileName;
-    private String filePath;
-    private String fileHash;
+    private String fileSize;
 
     public int getId() {
         return id;
@@ -36,6 +36,14 @@ public class Image {
         this.description = description;
     }
 
+    public String getOriginalName() {
+        return originalName;
+    }
+
+    public void setOriginalName(String originalName) {
+        this.originalName = originalName;
+    }
+
     public String getFileName() {
         return fileName;
     }
@@ -44,25 +52,17 @@ public class Image {
         this.fileName = fileName;
     }
 
-    public String getFilePath() {
-        return filePath;
+    public String getFileSize() {
+        return fileSize;
     }
 
-    public void setFilePath(String filePath) {
-        this.filePath = filePath;
-    }
-
-    public String getFileHash() {
-        return fileHash;
-    }
-
-    public void setFileHash(String fileHash) {
-        this.fileHash = fileHash;
+    public void setFileSize(String fileSize) {
+        this.fileSize = fileSize;
     }
 
     @Override
     public String toString() {
-        return "Image{" + "id=" + id + ", name=" + name + ", description=" + description + ", fileName=" + fileName + ", filePath=" + filePath + ", fileHash=" + fileHash + '}';
+        return "Image{" + "id=" + id + ", name=" + name + ", description=" + description + ", originalName=" + originalName + ", fileName=" + fileName + ", fileSize=" + fileSize + '}';
     }
      
 }

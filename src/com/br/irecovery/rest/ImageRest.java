@@ -39,9 +39,9 @@ public class ImageRest {
                 image.setId(rec.optInt("id"));
                 image.setName(rec.optString("name"));
                 image.setDescription(rec.optString("description"));
+                image.setOriginalName(rec.optString("originalname"));
                 image.setFileName(rec.optString("filename"));
-                image.setFilePath(rec.optString("filepath"));
-                image.setFileHash(rec.optString("filehash"));
+                image.setFileSize(rec.optString("filesize"));
                 images.add(image);
             }
             
