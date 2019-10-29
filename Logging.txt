@@ -1,8 +1,4 @@
-out 28, 2019 12:06:10 PM com.br.irecovery.util.Log setLog
+out 29, 2019 4:56:18 PM com.br.irecovery.util.Log setLog
 INFORMA합ES: Device{deviceID=E:, caption=Kingston DataTraveler 3.0 USB Device, size=31042039808, index=2}
-out 28, 2019 12:06:13 PM com.br.irecovery.util.Log setLog
-INFORMA합ES: Imagem: [Image{id=2, name=Notebook 2, description=Notebook 2019, originalName=api-irecovery.zip, fileName=1572273353598.zip, fileSize=4586016}]
-out 28, 2019 12:06:15 PM com.br.irecovery.util.Log setLog
-INFORMA합ES: Image na maquina
-out 28, 2019 12:06:20 PM com.br.irecovery.util.Log setLog
-INFORMA합ES: Image na maquina
+out 29, 2019 4:56:19 PM com.br.irecovery.util.Log setLog
+INFORMA합ES: Imagem: []
